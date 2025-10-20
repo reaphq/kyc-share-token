@@ -145,7 +145,7 @@ After generating share tokens, the output CSV can be directly uploaded to the Re
 
 ```bash
 curl -X POST https://api.reap.global/entity/kyc/import/batch \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Authorization: COMPLIANCE_API_KEY" \
   -H "X-Provider: sumsub" \
   -H "Idempotency-Key: batch-$(date +%s)-$(uuidgen)" \
   -F "file=@examples/sample_output.csv"

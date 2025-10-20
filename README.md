@@ -158,7 +158,7 @@ After generating share tokens, upload the output CSV to the Reap KYC Batch Uploa
 
 ```bash
 curl -X POST https://api.reap.global/entity/kyc/import/batch \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Authorization: COMPLIANCE_API_KEY" \
   -H "X-Provider: sumsub" \
   -H "Idempotency-Key: batch-$(date +%s)-$(uuidgen)" \
   -F "file=@output.csv"
@@ -177,7 +177,7 @@ form.append('file', fs.createReadStream('./output.csv'));
 const response = await fetch('https://api.reap.global/entity/kyc/import/batch', {
   method: 'POST',
   headers: {
-    'Authorization': 'Bearer YOUR_TOKEN',
+    'Authorization': 'COMPLIANCE_API_KEY',
     'X-Provider': 'sumsub',
     'Idempotency-Key': `batch-${new Date().toISOString()}-${crypto.randomUUID()}`,
     ...form.getHeaders()

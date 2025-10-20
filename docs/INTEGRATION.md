@@ -141,7 +141,7 @@ Note: The batch upload API expects `externalId`, `shareToken`, and `applicantLev
 
 ```bash
 curl -X POST https://api.reap.global/entity/kyc/import/batch \
-  -H "Authorization: Bearer YOUR_REAP_API_TOKEN" \
+  -H "Authorization: COMPLIANCE_API_KEY" \
   -H "X-Provider: sumsub" \
   -H "Idempotency-Key: batch-$(date +%s)-$(uuidgen)" \
   -F "file=@output.csv"
@@ -154,7 +154,7 @@ const FormData = require('form-data');
 const fs = require('fs');
 const crypto = require('crypto');
 
-async function uploadBatch(csvFilePath, apiToken) {
+async function uploadBatch(csvFilePath, apiKey) {
   const form = new FormData();
   form.append('file', fs.createReadStream(csvFilePath));
 
@@ -163,7 +163,7 @@ async function uploadBatch(csvFilePath, apiToken) {
   const response = await fetch('https://api.reap.global/entity/kyc/import/batch', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${apiToken}`,
+      'Authorization': apiKey,
       'X-Provider': 'sumsub',
       'Idempotency-Key': idempotencyKey,
       ...form.getHeaders()
@@ -180,7 +180,7 @@ async function uploadBatch(csvFilePath, apiToken) {
 }
 
 // Usage
-const result = await uploadBatch('./output.csv', process.env.REAP_API_TOKEN);
+const result = await uploadBatch('./output.csv', process.env.COMPLIANCE_API_KEY);
 console.log(`Batch uploaded: ${result.batchId}`);
 console.log(`Status: ${result.status}`);
 console.log(`Total records: ${result.totalRecords}`);
@@ -204,7 +204,7 @@ console.log(`Total records: ${result.totalRecords}`);
 #### Polling Implementation
 
 ```javascript
-async function pollBatchStatus(batchId, apiToken, options = {}) {
+async function pollBatchStatus(batchId, apiKey, options = {}) {
   const {
     pollIntervalMs = 30000,  // 30 seconds
     timeoutMs = 1800000,     // 30 minutes
@@ -218,7 +218,7 @@ async function pollBatchStatus(batchId, apiToken, options = {}) {
       `https://api.reap.global/entity/kyc/import/batch/${batchId}`,
       {
         headers: {
-          'Authorization': `Bearer ${apiToken}`
+          'Authorization': apiKey
         }
       }
     );
@@ -262,7 +262,7 @@ async function pollBatchStatus(batchId, apiToken, options = {}) {
 // Usage
 const finalStatus = await pollBatchStatus(
   '784d4045-c900-4050-aad6-8fe4c8d2fb16',
-  process.env.REAP_API_TOKEN,
+  process.env.COMPLIANCE_API_KEY,
   {
     pollIntervalMs: 30000,
     onProgress: (status) => {
@@ -354,8 +354,8 @@ const fs = require('fs');
 const crypto = require('crypto');
 
 class ReapKycBatchClient {
-  constructor(apiToken, apiUrl = 'https://api.reap.global') {
-    this.apiToken = apiToken;
+  constructor(apiKey, apiUrl = 'https://api.reap.global') {
+    this.apiKey = apiKey;
     this.apiUrl = apiUrl;
   }
 
@@ -368,7 +368,7 @@ class ReapKycBatchClient {
     const response = await fetch(`${this.apiUrl}/entity/kyc/import/batch`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${this.apiToken}`,
+        'Authorization': this.apiKey,
         'X-Provider': 'sumsub',
         'Idempotency-Key': idempotencyKey,
         ...form.getHeaders()
@@ -389,7 +389,7 @@ class ReapKycBatchClient {
       `${this.apiUrl}/entity/kyc/import/batch/${batchId}`,
       {
         headers: {
-          'Authorization': `Bearer ${this.apiToken}`
+          'Authorization': this.apiKey
         }
       }
     );
@@ -466,7 +466,7 @@ class ReapKycBatchClient {
 
 // Usage Example
 async function main() {
-  const client = new ReapKycBatchClient(process.env.REAP_API_TOKEN);
+  const client = new ReapKycBatchClient(process.env.COMPLIANCE_API_KEY);
 
   try {
     const result = await client.processBatch('./output.csv', {
@@ -502,7 +502,7 @@ set -e
 # Configuration
 INPUT_CSV="input.csv"
 OUTPUT_CSV="output.csv"
-REAP_API_TOKEN="${REAP_API_TOKEN}"
+COMPLIANCE_API_KEY="${COMPLIANCE_API_KEY}"
 API_URL="https://api.reap.global"
 
 echo "Step 1: Generating share tokens..."
@@ -512,7 +512,7 @@ echo -e "\nStep 2: Uploading batch to Reap API..."
 IDEMPOTENCY_KEY="batch-$(date +%s)-$(uuidgen)"
 
 UPLOAD_RESPONSE=$(curl -s -X POST "$API_URL/entity/kyc/import/batch" \
-  -H "Authorization: Bearer $REAP_API_TOKEN" \
+  -H "Authorization: $COMPLIANCE_API_KEY" \
   -H "X-Provider: sumsub" \
   -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -F "file=@$OUTPUT_CSV")
@@ -526,7 +526,7 @@ POLL_INTERVAL=30
 
 for ((i=1; i<=MAX_ATTEMPTS; i++)); do
   STATUS_RESPONSE=$(curl -s -X GET "$API_URL/entity/kyc/import/batch/$BATCH_ID" \
-    -H "Authorization: Bearer $REAP_API_TOKEN")
+    -H "Authorization: $COMPLIANCE_API_KEY")
 
   STATUS=$(echo "$STATUS_RESPONSE" | jq -r '.status')
   PROCESSED=$(echo "$STATUS_RESPONSE" | jq -r '.processedRecords')
