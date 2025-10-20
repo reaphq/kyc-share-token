@@ -31,7 +31,7 @@ Complete integration guide for using the KYC Share Token Generator with the Reap
 
 ### External Documentation
 
-- [Reap API Documentation](https://docs.reap.global)
+- [Reap API Documentation](https://reap-ra.readme.io/)
 - [KYC Batch Upload User Guide](https://reap-ra.readme.io/docs/upload-kyc-batch-user-guide)
 - [Sumsub API Documentation](https://docs.sumsub.com)
 

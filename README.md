@@ -300,5 +300,5 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
 **Maintained by**: [Reap Technologies Pte. Ltd.](https://reap.global)
 
 **Related Projects**:
-- [Reap API Documentation](https://docs.reap.global)
+- [Reap API Documentation](https://reap-ra.readme.io/)
 - [KYC Batch Upload User Guide](https://reap-ra.readme.io/docs/upload-kyc-batch-user-guide)
