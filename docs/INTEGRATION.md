@@ -730,7 +730,7 @@ Share tokens are typically valid for 24-48 hours. Regenerate tokens using the to
 
 ## Additional Resources
 
-- [KYC Batch Upload User Guide](https://docs.reap.global/docs/kyc-batch-upload)
+- [KYC Batch Upload User Guide](https://reap-ra.readme.io/docs/upload-kyc-batch-user-guide)
 - [Reap API Documentation](https://docs.reap.global)
 - [Sumsub API Documentation](https://docs.sumsub.com)
 - [GitHub Repository](https://github.com/reaphq/kyc-share-token)

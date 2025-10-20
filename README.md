@@ -301,4 +301,4 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 **Related Projects**:
 - [Reap API Documentation](https://docs.reap.global)
-- [KYC Batch Upload User Guide](https://docs.reap.global/docs/kyc-batch-upload)
+- [KYC Batch Upload User Guide](https://reap-ra.readme.io/docs/upload-kyc-batch-user-guide)
