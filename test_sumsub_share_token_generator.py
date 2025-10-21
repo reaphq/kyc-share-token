@@ -840,31 +840,31 @@ def run_tests():
     )
     
     print("=" * 80)
-    print("🧪 Running Sumsub Share Token Generator Test Suite")
+    print("Running Sumsub Share Token Generator Test Suite")
     print("=" * 80)
-    
+
     result = runner.run(suite)
-    
+
     print("\n" + "=" * 80)
-    print(f"📊 Test Results Summary:")
+    print(f"Test Results Summary:")
     print(f"   Tests Run: {result.testsRun}")
     print(f"   Failures: {len(result.failures)}")
     print(f"   Errors: {len(result.errors)}")
     print(f"   Skipped: {len(result.skipped) if hasattr(result, 'skipped') else 0}")
     print("=" * 80)
-    
+
     if result.failures:
-        print("\n❌ FAILURES:")
+        print("\n[FAILURES]:")
         for test, traceback in result.failures:
             print(f"   {test}: {traceback}")
-    
+
     if result.errors:
-        print("\n💥 ERRORS:")
+        print("\n[ERRORS]:")
         for test, traceback in result.errors:
             print(f"   {test}: {traceback}")
-    
+
     success = len(result.failures) == 0 and len(result.errors) == 0
-    print(f"\n🎯 Overall Result: {'✅ PASSED' if success else '❌ FAILED'}")
+    print(f"\nOverall Result: {'PASSED' if success else 'FAILED'}")
     
     return success
 
