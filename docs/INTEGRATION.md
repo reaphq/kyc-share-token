@@ -99,7 +99,7 @@ applicantId,externalId,applicantLevel
 68c276d1827b5c7a72ec620f,b1234567-89ab-cdef-0123-456789abcdef,levelKyc
 ```
 
-> **Note**: The `applicantLevel` column can be left empty to use Sumsub's default verification level.
+> **Note**: The `applicantLevel` column is optional and can be completely omitted. When not provided, Sumsub will use the default verification level.
 
 **Data Sources**:
 - Sumsub Dashboard: Export applicant list

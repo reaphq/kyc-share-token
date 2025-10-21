@@ -75,7 +75,7 @@ applicantId,externalId,applicantLevel
 68c276d1827b5c7a72ec6210,c9876543-21fe-dcba-9876-543210fedcba,basic-kyc-level
 ```
 
-> **Note**: The `applicantLevel` column can be left empty to use Sumsub's default verification level. The column header must still be present in the CSV.
+> **Note**: The `applicantLevel` column is optional and can be completely omitted. When not provided, Sumsub will use the default verification level.
 
 See [examples/sample_input.csv](examples/sample_input.csv) for a complete example.
 
