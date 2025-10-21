@@ -249,7 +249,7 @@ The test suite includes 40+ tests covering:
 
 ```mermaid
 graph LR
-    A[Input CSV<br/>applicantId, externalId, applicantLevel] --> B[Token Generator<br/>Rate limiting + Retries]
+    A[Input CSV<br/>applicantId, externalId<br/>applicantLevel (optional)] --> B[Token Generator<br/>Rate limiting + Retries]
     B --> C[Output CSV<br/>+ shareToken, forClientId]
     C --> D[Reap API<br/>POST /entity/kyc/import/batch]
     D --> E[Monitor<br/>GET /entity/kyc/import/batch/batchId]
@@ -266,7 +266,7 @@ graph LR
 
 **Error: "Invalid CSV format"**
 - Verify required headers: `applicantId`, `externalId` (case-sensitive)
-- Verify `applicantLevel` column header is present (values can be empty)
+- `applicantLevel` is optional and can be completely omitted
 - Ensure UTF-8 encoding without BOM
 - Remove empty rows
 
