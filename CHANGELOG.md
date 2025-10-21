@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-10-21
+
+### Changed
+- Made `applicantLevel` field optional in input CSV - can now be left empty to use Sumsub's default verification level
+- Updated documentation to reflect optional `applicantLevel` parameter
+- Updated validation logic to only require `applicantId` and `externalId` fields
+- Output CSV still includes `applicantLevel` column (may be empty if not provided in input)
+
+### Documentation
+- Updated README.md to clarify `applicantLevel` is optional
+- Updated INTEGRATION.md guide with optional parameter information
+- Updated examples/README.md with validation checklist changes
+- Updated troubleshooting sections across all documentation
+
 ## [1.0.0] - 2025-10-20
 
 ### Added

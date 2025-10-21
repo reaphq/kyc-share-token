@@ -11,7 +11,7 @@ This is an example input file showing the required CSV format for the tool.
 **Format**:
 - `applicantId`: Sumsub applicant identifier (24-character hexadecimal)
 - `externalId`: Your unique entity identifier (UUID format)
-- `applicantLevel`: Sumsub verification level (e.g., `levelKyc`, `basic-kyc-level`)
+- `applicantLevel`: Sumsub verification level (optional - can be empty to use default)
 
 **Usage**:
 ```bash
@@ -36,7 +36,7 @@ This is an example output file showing what the tool generates.
 3. Fill in your data:
    - **applicantId**: Copy from your Sumsub dashboard or API
    - **externalId**: UUID from your entity database
-   - **applicantLevel**: Match the level used when creating the applicant in Sumsub
+   - **applicantLevel**: Match the level used when creating the applicant in Sumsub (can be left empty to use default)
 4. Export as CSV (UTF-8 encoding)
 
 ### Using Python/Pandas
@@ -75,8 +75,8 @@ Before running the tool, verify your input CSV:
 - [ ] File has header row with exact column names (case-sensitive)
 - [ ] `applicantId` values are valid Sumsub applicant IDs (24-char hex strings)
 - [ ] `externalId` values are valid UUIDs
-- [ ] `applicantLevel` matches the level used in Sumsub
-- [ ] No empty rows or missing values
+- [ ] `applicantLevel` column header is present (values can be empty for default level)
+- [ ] No empty rows or missing required values
 - [ ] File is UTF-8 encoded
 - [ ] File size is under 10 MB
 - [ ] Row count is under 5,000 (for batch upload compatibility)

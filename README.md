@@ -64,7 +64,7 @@ Your input CSV must have the following columns:
 |--------|----------|-------------|---------|
 | `applicantId` | Yes | Sumsub applicant ID | `68c276d1827b5c7a72ec620e` |
 | `externalId` | Yes | Your unique entity identifier (UUID) | `ef88fd57-26cf-415d-a112-941732c55350` |
-| `applicantLevel` | Yes | Sumsub verification level | `levelKyc` or `basic-kyc-level` |
+| `applicantLevel` | No | Sumsub verification level (optional) | `levelKyc` or `basic-kyc-level` |
 
 ### Example Input CSV
 
@@ -74,6 +74,8 @@ applicantId,externalId,applicantLevel
 68c276d1827b5c7a72ec620f,b1234567-89ab-cdef-0123-456789abcdef,levelKyc
 68c276d1827b5c7a72ec6210,c9876543-21fe-dcba-9876-543210fedcba,basic-kyc-level
 ```
+
+> **Note**: The `applicantLevel` column can be left empty to use Sumsub's default verification level. The column header must still be present in the CSV.
 
 See [examples/sample_input.csv](examples/sample_input.csv) for a complete example.
 
@@ -263,7 +265,8 @@ graph LR
 - Check `.env` file or export variables manually
 
 **Error: "Invalid CSV format"**
-- Verify headers: `applicantId`, `externalId`, `applicantLevel` (case-sensitive)
+- Verify required headers: `applicantId`, `externalId` (case-sensitive)
+- Verify `applicantLevel` column header is present (values can be empty)
 - Ensure UTF-8 encoding without BOM
 - Remove empty rows
 

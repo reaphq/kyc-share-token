@@ -99,6 +99,8 @@ applicantId,externalId,applicantLevel
 68c276d1827b5c7a72ec620f,b1234567-89ab-cdef-0123-456789abcdef,levelKyc
 ```
 
+> **Note**: The `applicantLevel` column can be left empty to use Sumsub's default verification level.
+
 **Data Sources**:
 - Sumsub Dashboard: Export applicant list
 - Sumsub API: Query applicants via API
@@ -133,7 +135,7 @@ ef88fd57-26cf-415d-a112-941732c55350,eyJhbGci...,levelKyc
 b1234567-89ab-cdef-0123-456789abcdef,eyJhbGci...,levelKyc
 ```
 
-Note: The batch upload API expects `externalId`, `shareToken`, and `applicantLevel` columns (no `applicantId` column).
+> **Note**: The batch upload API expects `externalId` (required), `shareToken` (required), and `applicantLevel` (optional) columns. The `applicantId` column is not needed for upload.
 
 ### Step 3: Upload Batch to Reap API
 
@@ -672,7 +674,7 @@ logBatchEvent('batch_processing_complete', { batchId, successful: 995, failed: 5
 
 **Cause**: Output CSV from token generator has wrong column names
 
-**Solution**: Ensure token generator output has columns: `externalId`, `shareToken`, `applicantLevel`
+**Solution**: Ensure token generator output has required columns: `externalId`, `shareToken` (and optional `applicantLevel` header)
 
 #### Issue: "Entities don't exist"
 
