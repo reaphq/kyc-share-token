@@ -292,9 +292,9 @@ class TestSumsubShareTokenGenerator(unittest.TestCase):
 68c276d1827b5c7a72ec620e,ef88fd57-26cf-415d-a112-941732c55350,KYC via API
 68c276d1827b5c7a72ec620f,ef88fd57-26cf-415d-a112-941732c55351,KYC via API"""
         
-        # Create existing output CSV with one successful entry
-        existing_output_data = """externalId,shareToken,applicantLevel,applicantId,forClientId,error
-ef88fd57-26cf-415d-a112-941732c55350,existing-token,KYC via API,68c276d1827b5c7a72ec620e,reap.global_116803,"""
+        # Create existing output CSV with one successful entry (new minimal schema)
+        existing_output_data = """externalId,shareToken,error
+ef88fd57-26cf-415d-a112-941732c55350,existing-token,"""
         
         with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as input_file:
             input_file.write(input_csv_data)
@@ -331,9 +331,9 @@ ef88fd57-26cf-415d-a112-941732c55350,existing-token,KYC via API,68c276d1827b5c7a
         input_csv_data = """applicantId,externalId,applicantLevel
 68c276d1827b5c7a72ec620e,ef88fd57-26cf-415d-a112-941732c55350,KYC via API"""
         
-        # Existing output with failed entry
-        existing_output_data = """externalId,shareToken,applicantLevel,applicantId,forClientId,error
-ef88fd57-26cf-415d-a112-941732c55350,,KYC via API,68c276d1827b5c7a72ec620e,reap.global_116803,Previous error"""
+        # Existing output with failed entry (new minimal schema)
+        existing_output_data = """externalId,shareToken,error
+ef88fd57-26cf-415d-a112-941732c55350,,Previous error"""
         
         with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as input_file:
             input_file.write(input_csv_data)
@@ -706,10 +706,8 @@ class TestSumsubGeneratorIntegration(unittest.TestCase):
                 
                 # First run: simulate partial processing by manually creating partial output
                 partial_data = [
-                    {'externalId': 'ext_000', 'shareToken': 'test_token', 'applicantLevel': 'basic', 
-                     'applicantId': 'id_0', 'forClientId': 'test_client', 'error': ''},
-                    {'externalId': 'ext_001', 'shareToken': 'test_token', 'applicantLevel': 'basic', 
-                     'applicantId': 'id_1', 'forClientId': 'test_client', 'error': ''}
+                    {'externalId': 'ext_000', 'shareToken': 'test_token', 'error': ''},
+                    {'externalId': 'ext_001', 'shareToken': 'test_token', 'error': ''}
                 ]
                 partial_df = pd.DataFrame(partial_data)
                 partial_df.to_csv(output_file_path, index=False)

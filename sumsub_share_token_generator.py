@@ -38,8 +38,8 @@ SAMPLE DATA:
     68c276d1827b5c7a72ec620f,ef88fd57-26cf-415d-a112-941732c55351,2025-09-11 08:15:30,,"Applicant '68c276d1827b5c7a72ec620f'",,,,,,,,"KYC via API",API,init,,
 
 GENERATED OUTPUT CSV FORMAT (comma-separated):
-    externalId,shareToken,applicantLevel,applicantId,forClientId,error
-    ef88fd57-26cf-415d-a112-941732c55350,eyJhbGciOi...,levelKyc,68c276d1827b5c7a72ec620e,reap.global_116803,
+    externalId,shareToken,error
+    ef88fd57-26cf-415d-a112-941732c55350,eyJhbGciOi...,
     
     For dry-run mode, successful entries will have shareToken="DRY_RUN" and empty error field.
 
@@ -337,9 +337,6 @@ class SumsubShareTokenGenerator:
         return {
             'externalId': external_id,
             'shareToken': 'DRY_RUN' if is_dry_run else token_result.get('token', ''),
-            'applicantLevel': applicant_level,
-            'applicantId': applicant_id,
-            'forClientId': token_result.get('forClientId', self.FOR_CLIENT_ID),
             'error': ''
         }
 
@@ -347,9 +344,6 @@ class SumsubShareTokenGenerator:
         return {
             'externalId': external_id,
             'shareToken': 'FAILED',
-            'applicantLevel': applicant_level,
-            'applicantId': applicant_id,
-            'forClientId': self.FOR_CLIENT_ID,
             'error': message
         }
 
@@ -383,7 +377,7 @@ class SumsubShareTokenGenerator:
         return last_progress_log
 
     def _merge_stable(self, existing_df: Optional[pd.DataFrame], new_rows: List[Dict]) -> pd.DataFrame:
-        columns = ['externalId','shareToken','applicantLevel','applicantId','forClientId','error']
+        columns = ['externalId','shareToken','error']
         
         if existing_df is None or existing_df.empty:
             # No existing data - return new rows in input file order
