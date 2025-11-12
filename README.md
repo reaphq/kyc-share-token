@@ -81,24 +81,20 @@ See [examples/sample_input.csv](examples/sample_input.csv) for a complete exampl
 
 ## Output CSV Format
 
-The tool generates a CSV with additional columns:
+The tool outputs a minimal CSV containing only the fields needed for batch upload and error review:
 
 | Column | Description |
 |--------|-------------|
-| `applicantId` | Original applicant ID |
 | `externalId` | Original external ID |
-| `applicantLevel` | Original applicant level |
-| `shareToken` | Generated share token (JWT) |
-| `forClientId` | Sumsub client ID |
-| `error` | Error message (if generation failed) |
+| `shareToken` | Generated share token (JWT) or `DRY_RUN`/`FAILED` |
+| `error` | Error message if generation failed; empty if successful |
 
 ### Example Output CSV
 
 ```csv
-applicantId,externalId,applicantLevel,shareToken,forClientId,error
-68c276d1827b5c7a72ec620e,ef88fd57-26cf-415d-a112-941732c55350,levelKyc,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...,your-client-id,
-68c276d1827b5c7a72ec620f,b1234567-89ab-cdef-0123-456789abcdef,levelKyc,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...,your-client-id,
-68c276d1827b5c7a72ec6210,c9876543-21fe-dcba-9876-543210fedcba,levelKyc,,,"Applicant not found"
+externalId,shareToken,error
+ef88fd57-26cf-415d-a112-941732c55350,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...,
+b1234567-89ab-cdef-0123-456789abcdef,,Applicant not found
 ```
 
 See [examples/sample_output.csv](examples/sample_output.csv) for a complete example.
@@ -250,7 +246,7 @@ The test suite includes 40+ tests covering:
 ```mermaid
 graph LR
     A[Input CSV<br/>applicantId, externalId<br/>applicantLevel (optional)] --> B[Token Generator<br/>Rate limiting + Retries]
-    B --> C[Output CSV<br/>+ shareToken, forClientId]
+    B --> C[Output CSV<br/>+ shareToken]
     C --> D[Reap API<br/>POST /entity/kyc/import/batch]
     D --> E[Monitor<br/>GET /entity/kyc/import/batch/batchId]
     E --> F[Review Results<br/>Success/Failed counts]
